@@ -52,4 +52,15 @@ class ProductsControllerTest < ActionController::TestCase
 
     assert_redirected_to products_path
   end
+
+  test "should have a description" do
+    get :index # will go to index page from the products controller
+    assert_response :success # checks to see if response is a success
+    assert_select '.products .list_description', count: 3 # looks for 3 list_description classes in the products class
+    assert_select '.list_actions' do |elements| # loop that looks for all elements in list_actions
+      elements.each do |element|
+        assert_select element, "a", 3 # looks for 3 'a' tags in elements under list_actions
+      end
+    end 
+  end
 end
